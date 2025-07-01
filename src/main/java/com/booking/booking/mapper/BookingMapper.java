@@ -1,8 +1,8 @@
 package com.booking.booking.mapper;
 
-import models.Booking;
-import models.DTO.BookingRequestDTO;
-import models.DTO.BookingResponceDTO;
+import com.booking.booking.models.Booking;
+import com.booking.booking.models.DTO.BookingRequestDTO;
+import com.booking.booking.models.DTO.BookingResponceDTO;
 import org.mapstruct.Mapper;
 
 

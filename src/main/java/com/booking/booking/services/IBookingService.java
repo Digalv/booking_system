@@ -1,7 +1,7 @@
-package services;
+package com.booking.booking.services;
 
-import models.DTO.BookingRequestDTO;
-import models.DTO.BookingResponceDTO;
+import com.booking.booking.models.DTO.BookingRequestDTO;
+import com.booking.booking.models.DTO.BookingResponceDTO;
 
 import java.util.UUID;
 

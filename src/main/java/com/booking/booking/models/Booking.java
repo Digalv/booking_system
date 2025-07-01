@@ -1,4 +1,4 @@
-package models;
+package com.booking.booking.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

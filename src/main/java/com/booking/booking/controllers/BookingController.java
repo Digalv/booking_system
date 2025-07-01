@@ -1,12 +1,15 @@
-package controllers;
+package com.booking.booking.controllers;
 
-import models.DTO.BookingResponceDTO;
+import com.booking.booking.models.DTO.BookingResponceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import services.BookingService;
+import com.booking.booking.services.BookingService;
 
 @RestController
+@RequestMapping("/api/booking")
 public class BookingController {
     private final BookingService _bookingService;
     @Autowired
@@ -14,6 +17,7 @@ public class BookingController {
         this._bookingService = _bookingService;
     }
 
+    @PostMapping
     public ResponseEntity<?>createBooking(BookingResponceDTO booking){
         return  ResponseEntity.ok(_bookingService.createBooking(booking));
     }

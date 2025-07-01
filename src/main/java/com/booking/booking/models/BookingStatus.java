@@ -1,4 +1,4 @@
-package models;
+package com.booking.booking.models;
 
 public enum BookingStatus {
     BOOKED,

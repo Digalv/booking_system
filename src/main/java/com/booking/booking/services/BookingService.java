@@ -1,8 +1,8 @@
-package services;
+package com.booking.booking.services;
 
-import Repository.BookingRepository;
-import models.DTO.BookingRequestDTO;
-import models.DTO.BookingResponceDTO;
+import com.booking.booking.Repository.BookingRepository;
+import com.booking.booking.models.DTO.BookingRequestDTO;
+import com.booking.booking.models.DTO.BookingResponceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
