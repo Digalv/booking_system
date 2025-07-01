@@ -12,8 +12,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "service_item")
-public class ServiceItem {
+@Table(name = "offering")
+public class Offering {
     @Id
     @GeneratedValue
     private UUID id;

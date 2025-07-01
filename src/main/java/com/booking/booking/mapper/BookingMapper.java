@@ -1,15 +1,15 @@
 package com.booking.booking.mapper;
 
 import com.booking.booking.models.Booking;
-import com.booking.booking.models.DTO.BookingRequestDTO;
-import com.booking.booking.models.DTO.BookingResponseDTO;
+import com.booking.booking.models.DTO.BookingRequest;
+import com.booking.booking.models.DTO.BookingResponse;
 import org.mapstruct.Mapper;
 
 
 @Mapper(componentModel = "spring")
 public interface BookingMapper {
-    Booking BookingResponseToEntity(BookingResponseDTO dto);
-    Booking BookingRequestToEntity(BookingRequestDTO dto);
-    BookingResponseDTO BookingToResponse(Booking booking);
-    BookingRequestDTO BookingToRequest(Booking booking);
+    Booking BookingResponseToEntity(BookingResponse dto);
+    Booking BookingRequestToEntity(BookingRequest dto);
+    BookingResponse BookingToResponse(Booking booking);
+    BookingRequest BookingToRequest(Booking booking);
 }
