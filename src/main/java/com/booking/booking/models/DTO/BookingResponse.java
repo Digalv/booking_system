@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 public class BookingResponse {
     private String clientName;
     private String clientEmail;
+    private UUID offering;
 
     private LocalDateTime startTime;
 }
