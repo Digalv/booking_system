@@ -21,8 +21,8 @@ public class Booking {
 
     private LocalDateTime startTime;
 
-    @ManyToOne
-    private ServiceItem serviceItem;
+    /*@ManyToOne
+    private ServiceItem serviceItem;*/
 
     private BookingStatus status;
 
