@@ -1,24 +1,29 @@
 package com.booking.booking.services;
 
 import com.booking.booking.Repository.BookingRepository;
+import com.booking.booking.Repository.OfferingRepository;
 import com.booking.booking.mapper.BookingMapper;
 import com.booking.booking.models.Booking;
 import com.booking.booking.models.DTO.BookingRequest;
 import com.booking.booking.models.DTO.BookingResponse;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
 public class BookingService implements IBookingService {
-    private final BookingRepository _bookingRepository;
-    private final BookingMapper _bookingMapper;
+    private final BookingRepository bookingRepository;
+    private final OfferingService offeringService;
+    private final BookingMapper bookingMapper;
 
     @Autowired
-    public BookingService(BookingRepository _bookingRepository, BookingMapper _bookingMapper) {
-        this._bookingRepository = _bookingRepository;
-        this._bookingMapper = _bookingMapper;
+    public BookingService(BookingRepository bookingRepository, OfferingService offeringService, BookingMapper bookingMapper) {
+        this.bookingRepository = bookingRepository;
+        this.offeringService = offeringService;
+        this.bookingMapper = bookingMapper;
     }
 
     public BookingRequest getBooking(UUID id) {
@@ -27,8 +32,14 @@ public class BookingService implements IBookingService {
 
 
     public UUID createBooking(BookingResponse bookingResponse) {
-        Booking booking = _bookingMapper.BookingResponseToEntity(bookingResponse);
-        _bookingRepository.save(booking);
-        return booking.getId();
+        Booking booking = bookingMapper.bookingResponseToEntity(bookingResponse);
+        try {
+            booking.setOffering(offeringService.getOfferingById(bookingResponse.getOffering()));
+            booking.setCreatedAt(LocalDateTime.now());
+            bookingRepository.save(booking);
+            return booking.getId();
+        } catch (Exception e) {
+            throw new EntityNotFoundException("404");
+        }
     }
 }

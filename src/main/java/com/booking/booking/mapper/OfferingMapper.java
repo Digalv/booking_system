@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface OfferingMapper {
-    Offering OfferingResponseToEntity(OfferingResponse dto);
-    Offering OfferingRequestToEntity(OfferingRequest dto);
-    OfferingResponse OfferingToResponse(Offering offering);
-    OfferingRequest OfferingToRequest(Offering offering);
+    Offering offeringResponseToEntity(OfferingResponse dto);
+    Offering offeringRequestToEntity(OfferingRequest dto);
+    OfferingResponse offeringToResponse(Offering offering);
+    OfferingRequest offeringToRequest(Offering offering);
 }

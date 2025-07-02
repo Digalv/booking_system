@@ -4,6 +4,8 @@ import com.booking.booking.Repository.OfferingRepository;
 import com.booking.booking.mapper.OfferingMapper;
 import com.booking.booking.models.DTO.OfferingRequest;
 import com.booking.booking.models.DTO.OfferingResponse;
+import com.booking.booking.models.Offering;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +14,31 @@ import java.util.UUID;
 @Service
 public class OfferingService implements IOfferingService{
 
-    private final OfferingRepository _offeringRepository;
-    private final OfferingMapper _offeringMapper;
+    private final OfferingRepository offeringRepository;
+    private final OfferingMapper offeringMapper;
 
     @Autowired
-    public OfferingService(OfferingRepository _offeringRepository, OfferingMapper _offeringMapper) {
-        this._offeringRepository = _offeringRepository;
-        this._offeringMapper = _offeringMapper;
+    public OfferingService(OfferingRepository offeringRepository, OfferingMapper offeringMapper) {
+        this.offeringRepository = offeringRepository;
+        this.offeringMapper = offeringMapper;
+    }
+
+
+    @Override
+    public Offering getOfferingById(UUID id) {
+        return offeringRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Offering not found"));
     }
 
     @Override
-    public OfferingRequest getOffering(UUID id) {
-        return null;
+    public OfferingRequest getOfferingRequest(UUID id) {
+        return offeringMapper.offeringToRequest(this.getOfferingById(id));
     }
 
     @Override
     public UUID createOffering(OfferingResponse offeringResponse) {
-        return null;
+        Offering offering = offeringMapper.offeringResponseToEntity(offeringResponse);
+        offeringRepository.save(offering);
+        return offering.getId();
     }
 }

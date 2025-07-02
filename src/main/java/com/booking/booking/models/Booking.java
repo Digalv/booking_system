@@ -23,8 +23,8 @@ public class Booking {
 
     private LocalDateTime startTime;
 
-    /*@ManyToOne
-    private Offering Offering;*/
+    @ManyToOne
+    private Offering Offering;
 
     private BookingStatus status;
 
