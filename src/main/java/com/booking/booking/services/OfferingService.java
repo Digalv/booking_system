@@ -25,13 +25,19 @@ public class OfferingService implements IOfferingService{
 
 
     @Override
-    public OfferingRequest getOffering(UUID id) {
-        return null;
+    public Offering getOfferingById(UUID id) {
+        return offeringRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Offering not found"));
+    }
+
+    @Override
+    public OfferingRequest getOfferingRequest(UUID id) {
+        return offeringMapper.offeringToRequest(this.getOfferingById(id));
     }
 
     @Override
     public UUID createOffering(OfferingResponse offeringResponse) {
-        Offering offering = offeringMapper.OfferingResponseToEntity(offeringResponse);
+        Offering offering = offeringMapper.offeringResponseToEntity(offeringResponse);
         offeringRepository.save(offering);
         return offering.getId();
     }

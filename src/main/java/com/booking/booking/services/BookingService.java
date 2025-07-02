@@ -16,13 +16,13 @@ import java.util.UUID;
 @Service
 public class BookingService implements IBookingService {
     private final BookingRepository bookingRepository;
-    private final OfferingRepository offeringRepository;
+    private final OfferingService offeringService;
     private final BookingMapper bookingMapper;
 
     @Autowired
-    public BookingService(BookingRepository bookingRepository, OfferingRepository offeringRepository, BookingMapper bookingMapper) {
+    public BookingService(BookingRepository bookingRepository, OfferingService offeringService, BookingMapper bookingMapper) {
         this.bookingRepository = bookingRepository;
-        this.offeringRepository = offeringRepository;
+        this.offeringService = offeringService;
         this.bookingMapper = bookingMapper;
     }
 
@@ -32,9 +32,9 @@ public class BookingService implements IBookingService {
 
 
     public UUID createBooking(BookingResponse bookingResponse) {
-        Booking booking = bookingMapper.BookingResponseToEntity(bookingResponse);
+        Booking booking = bookingMapper.bookingResponseToEntity(bookingResponse);
         try {
-            booking.setOffering(offeringRepository.findById(bookingResponse.getOffering()).get());
+            booking.setOffering(offeringService.getOfferingById(bookingResponse.getOffering()));
             booking.setCreatedAt(LocalDateTime.now());
             bookingRepository.save(booking);
             return booking.getId();
