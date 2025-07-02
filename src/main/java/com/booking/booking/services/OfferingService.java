@@ -23,10 +23,10 @@ public class OfferingService implements IOfferingService{
         this.offeringMapper = offeringMapper;
     }
 
+
     @Override
     public OfferingRequest getOffering(UUID id) {
-        return offeringRepository.findById(id)
-                .orElseThrow() -> new EntityNotFoundException("404");
+        return null;
     }
 
     @Override
