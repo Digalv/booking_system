@@ -2,8 +2,8 @@ package com.booking.booking.services;
 
 import com.booking.booking.Repository.OfferingRepository;
 import com.booking.booking.mapper.OfferingMapper;
-import com.booking.booking.models.DTO.OfferingRequest;
 import com.booking.booking.models.DTO.OfferingResponse;
+import com.booking.booking.models.DTO.OfferingRequest;
 import com.booking.booking.models.Offering;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +31,13 @@ public class OfferingService implements IOfferingService{
     }
 
     @Override
-    public OfferingRequest getOfferingRequest(UUID id) {
-        return offeringMapper.offeringToRequest(this.getOfferingById(id));
+    public OfferingResponse getOfferingRequest(UUID id) {
+        return offeringMapper.offeringToResponse(this.getOfferingById(id));
     }
 
     @Override
-    public UUID createOffering(OfferingResponse offeringResponse) {
-        Offering offering = offeringMapper.offeringResponseToEntity(offeringResponse);
+    public UUID createOffering(OfferingRequest offeringRequest) {
+        Offering offering = offeringMapper.offeringRequestToEntity(offeringRequest);
         offeringRepository.save(offering);
         return offering.getId();
     }

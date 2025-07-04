@@ -1,6 +1,6 @@
 package com.booking.booking.controllers;
 
-import com.booking.booking.models.DTO.OfferingResponse;
+import com.booking.booking.models.DTO.OfferingRequest;
 import com.booking.booking.services.OfferingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class OfferingController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createOffering(OfferingResponse offering){
+    public ResponseEntity<?> createOffering(OfferingRequest offering){
         return ResponseEntity.ok(offeringService.createOffering(offering));
     }
 

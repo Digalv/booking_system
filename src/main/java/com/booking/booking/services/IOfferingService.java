@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface IOfferingService {
     Offering getOfferingById(UUID id);
-    OfferingRequest getOfferingRequest(UUID id);
-    UUID createOffering (OfferingResponse offeringResponse);
+    OfferingResponse getOfferingRequest(UUID id);
+    UUID createOffering (OfferingRequest offeringResponse);
 }
