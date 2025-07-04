@@ -1,7 +1,6 @@
 package com.booking.booking.services;
 
 import com.booking.booking.Repository.BookingRepository;
-import com.booking.booking.Repository.OfferingRepository;
 import com.booking.booking.mapper.BookingMapper;
 import com.booking.booking.models.Booking;
 import com.booking.booking.models.DTO.BookingRequest;
@@ -26,15 +25,15 @@ public class BookingService implements IBookingService {
         this.bookingMapper = bookingMapper;
     }
 
-    public BookingRequest getBooking(UUID id) {
+    public BookingResponse getBooking(UUID id) {
         return null;
     }
 
 
-    public UUID createBooking(BookingResponse bookingResponse) {
-        Booking booking = bookingMapper.bookingResponseToEntity(bookingResponse);
+    public UUID createBooking(BookingRequest bookingRequest) {
+        Booking booking = bookingMapper.bookingRequestToEntity(bookingRequest);
         try {
-            booking.setOffering(offeringService.getOfferingById(bookingResponse.getOffering()));
+            booking.setOffering(offeringService.getOfferingById(bookingRequest.getOffering()));
             booking.setCreatedAt(LocalDateTime.now());
             bookingRepository.save(booking);
             return booking.getId();

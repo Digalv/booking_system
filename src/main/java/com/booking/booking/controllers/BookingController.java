@@ -1,6 +1,6 @@
 package com.booking.booking.controllers;
 
-import com.booking.booking.models.DTO.BookingResponse;
+import com.booking.booking.models.DTO.BookingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<?>createBooking(BookingResponse booking){
+    public ResponseEntity<?>createBooking(BookingRequest booking){
         return  ResponseEntity.ok(_bookingService.createBooking(booking));
     }
 }

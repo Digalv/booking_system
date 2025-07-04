@@ -6,6 +6,6 @@ import com.booking.booking.models.DTO.BookingResponse;
 import java.util.UUID;
 
 public interface IBookingService {
-    BookingRequest getBooking(UUID id);
-    UUID createBooking(BookingResponse bookingResponse);
+    BookingResponse getBooking(UUID id);
+    UUID createBooking(BookingRequest bookingResponse);
 }
