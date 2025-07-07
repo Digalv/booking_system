@@ -4,8 +4,19 @@ import com.booking.booking.models.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
+    // 1) «предыдущее» бронирование по времени
+    Optional<Booking> findTopByStartTimeLessThanEqualOrderByStartTimeDesc(
+            LocalDateTime candidateStart
+    );
+
+    // 2) «следующее» бронирование по времени
+    Optional<Booking> findTopByStartTimeGreaterThanEqualOrderByStartTimeAsc(
+            LocalDateTime candidateEnd
+    );
 }

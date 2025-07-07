@@ -1,5 +1,6 @@
 package com.booking.booking.models.DTO;
 
+import com.booking.booking.models.BookingStatus;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,10 @@ import java.util.UUID;
 @ToString
 public class BookingRequest {
     @NotBlank
-    @Pattern(regexp = "^[^0-9]*$") //excluded number
+    @Pattern(
+            regexp = "^[A-Za-z]+(\\s[A-Za-z'-]+)*$",
+            message = "Client name must contain only Latin letters, single spaces, apostrophes, or hyphens"
+    )
     @Size(min = 2, max = 50)
     private String clientName;
 
@@ -23,6 +27,8 @@ public class BookingRequest {
 
     @NotNull
     private UUID offering;
+
+    public BookingStatus bookingStatus;
 
     @NotNull
     @Future

@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -26,21 +27,34 @@ public class BookingService implements IBookingService {
         this.bookingMapper = bookingMapper;
     }
 
-    public BookingResponse getBooking(UUID id) {
-        return null;
+    @Override
+    public Booking getBookingById(UUID id) {
+        return bookingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Booking not found"));
     }
 
+    @Override
+    public BookingResponse getBookingResponse(UUID id) {
+        return bookingMapper.bookingToResponse(getBookingById(id));
+    }
 
+    @Override
     public UUID createBooking(BookingRequest bookingRequest) {
         Booking booking = bookingMapper.bookingRequestToEntity(bookingRequest);
-        try {
-            booking.setOffering(offeringService.getOfferingById(bookingRequest.getOffering()));
-            booking.setCreatedAt(LocalDateTime.now());
-            booking.setStatus(BookingStatus.BOOKED);
-            bookingRepository.save(booking);
-            return booking.getId();
-        } catch (Exception e) {
-            throw new EntityNotFoundException("404");
-        }
+        booking.setOffering(offeringService.getOfferingById(bookingRequest.getOffering()));
+
+        int i =
+        if()
+    }
+
+    @Override
+    public void updateBooking(UUID id, BookingRequest bookingRequest) {
+        Booking booking = getBookingById(id);
+    }
+
+    @Override
+    public void deleteBooking(UUID id) {
+        Booking booking = getBookingById(id);
+        bookingRepository.delete(booking);
     }
 }

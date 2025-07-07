@@ -28,7 +28,7 @@ public class Booking {
     @ManyToOne
     private Offering Offering;
 
-    private BookingStatus status;
+    private BookingStatus status = BookingStatus.BOOKED;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 }
