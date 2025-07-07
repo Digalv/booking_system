@@ -3,6 +3,7 @@ package com.booking.booking.services;
 import com.booking.booking.Repository.BookingRepository;
 import com.booking.booking.mapper.BookingMapper;
 import com.booking.booking.models.Booking;
+import com.booking.booking.models.BookingStatus;
 import com.booking.booking.models.DTO.BookingRequest;
 import com.booking.booking.models.DTO.BookingResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,6 +36,7 @@ public class BookingService implements IBookingService {
         try {
             booking.setOffering(offeringService.getOfferingById(bookingRequest.getOffering()));
             booking.setCreatedAt(LocalDateTime.now());
+            booking.setStatus(BookingStatus.BOOKED);
             bookingRepository.save(booking);
             return booking.getId();
         } catch (Exception e) {

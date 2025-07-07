@@ -31,14 +31,37 @@ public class OfferingService implements IOfferingService{
     }
 
     @Override
-    public OfferingResponse getOfferingRequest(UUID id) {
-        return offeringMapper.offeringToResponse(this.getOfferingById(id));
+    public OfferingResponse getOfferingResponse(UUID id) {
+        return offeringMapper.offeringToResponse(getOfferingById(id));
     }
 
     @Override
     public UUID createOffering(OfferingRequest offeringRequest) {
         Offering offering = offeringMapper.offeringRequestToEntity(offeringRequest);
+        if (offeringRepository.existsByTitle(offering.getTitle())){
+            throw new IllegalArgumentException("Title already in use: " + offeringRequest.getTitle());
+        }
         offeringRepository.save(offering);
         return offering.getId();
+    }
+
+    @Override
+    public void deleteOffering(UUID id) {
+        Offering offering = this.getOfferingById(id);
+        offeringRepository.delete(offering);
+    }
+
+    @Override
+    public void updateOffering(UUID id, OfferingRequest offeringRequest) {
+        Offering offering = getOfferingById(id);
+
+        if(!offering.getTitle().equals(offeringRequest.getTitle()) && offeringRepository.existsByTitle(offeringRequest.getTitle())) {
+            throw new IllegalArgumentException("Title already in use: " + offeringRequest.getTitle());
+        }
+        offering.setTitle(offeringRequest.getTitle());
+        offering.setPrice(offeringRequest.getPrice());
+        offering.setDurationInMinutes(offeringRequest.getDurationInMinutes());
+
+        offeringRepository.save(offering);
     }
 }

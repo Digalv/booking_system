@@ -18,12 +18,12 @@ public class OfferingController {
         this.offeringService = _offeringService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createOffering(OfferingRequest offering){
         return ResponseEntity.ok(offeringService.createOffering(offering));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?> getOffering(@PathVariable UUID id){
         return ResponseEntity.ok(offeringService.getOfferingRequest(id));
     }
