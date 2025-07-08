@@ -47,7 +47,7 @@ public class OfferingService implements IOfferingService{
 
     @Override
     public void deleteOffering(UUID id) {
-        Offering offering = this.getOfferingById(id);
+        Offering offering = getOfferingById(id);
         offeringRepository.delete(offering);
     }
 

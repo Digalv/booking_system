@@ -24,11 +24,15 @@ public class Booking {
     private String clientEmail;
 
     private LocalDateTime startTime;
+    public LocalDateTime getEndTime(){
+        return startTime.plusMinutes(getOffering().getDurationInMinutes());
+    }
 
     @ManyToOne
     private Offering Offering;
 
-    private BookingStatus status;
+    private BookingStatus status = BookingStatus.BOOKED;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+
 }

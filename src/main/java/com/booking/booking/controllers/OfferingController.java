@@ -25,6 +25,6 @@ public class OfferingController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getOffering(@PathVariable UUID id){
-        return ResponseEntity.ok(offeringService.getOfferingRequest(id));
+        return ResponseEntity.ok(offeringService.getOfferingResponse(id));
     }
 }
