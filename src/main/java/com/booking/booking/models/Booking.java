@@ -24,6 +24,9 @@ public class Booking {
     private String clientEmail;
 
     private LocalDateTime startTime;
+    public LocalDateTime getEndTime(){
+        return startTime.plusMinutes(getOffering().getDurationInMinutes());
+    }
 
     @ManyToOne
     private Offering Offering;
@@ -31,4 +34,5 @@ public class Booking {
     private BookingStatus status = BookingStatus.BOOKED;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
 }
