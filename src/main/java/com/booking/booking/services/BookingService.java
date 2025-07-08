@@ -10,10 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -61,7 +59,7 @@ public class BookingService implements IBookingService {
             throw new EntityNotFoundException("NOT AVAIBLE"); // СДЕЛАТЬ ОШИБКУ
         }
         booking.setClientName(bookingUpdate.getClientName());
-        booking.setClientEmail(booking.getClientEmail());
+        booking.setClientEmail(bookingUpdate.getClientEmail());
         booking.setStatus(bookingUpdate.getStatus());
         booking.setStartTime(bookingUpdate.getStartTime());
         booking.setOffering(bookingUpdate.getOffering());
