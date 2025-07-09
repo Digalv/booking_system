@@ -1,5 +1,6 @@
 package com.booking.booking.services;
 
+import com.booking.booking.Exceptions.BookingTimeNotAvaibleException;
 import com.booking.booking.Repository.BookingRepository;
 import com.booking.booking.mapper.BookingMapper;
 import com.booking.booking.models.Booking;
@@ -42,27 +43,19 @@ public class BookingService implements IBookingService {
     public UUID createBooking(BookingRequest bookingRequest) {
         Booking booking = bookingMapper.bookingRequestToEntity(bookingRequest);
         booking.setOffering(offeringService.getOfferingById(bookingRequest.getOffering()));
-        if (!isBookingSlotFree(booking)){
-            throw new EntityNotFoundException("NOT AVAIBLE"); // СДЕЛАТЬ ОШИБКУ
-        }
+
+        isBookingSlotFree(booking);
         bookingRepository.save(booking);
         return booking.getId();
     }
 
     @Override
-    public void updateBooking(UUID id, BookingRequest bookingRequest) {
-        Booking bookingUpdate = bookingMapper.bookingRequestToEntity(bookingRequest);
-        bookingUpdate.setOffering(offeringService.getOfferingById(bookingRequest.getOffering()));
-
+    public void updateBooking(UUID id, BookingRequest bookingRequestUpdate) {
         Booking booking = getBookingById(id);
-        if(!isBookingSlotFree(bookingUpdate)){
-            throw new EntityNotFoundException("NOT AVAIBLE"); // СДЕЛАТЬ ОШИБКУ
-        }
-        booking.setClientName(bookingUpdate.getClientName());
-        booking.setClientEmail(bookingUpdate.getClientEmail());
-        booking.setStatus(bookingUpdate.getStatus());
-        booking.setStartTime(bookingUpdate.getStartTime());
-        booking.setOffering(bookingUpdate.getOffering());
+        bookingMapper.bookingUpdateToEntity(booking, bookingRequestUpdate);
+        booking.setOffering(offeringService.getOfferingById(bookingRequestUpdate.getOffering()));
+
+        isBookingSlotFree(booking);
 
         bookingRepository.save(booking);
     }
@@ -73,7 +66,7 @@ public class BookingService implements IBookingService {
         bookingRepository.delete(booking);
     }
 
-    public boolean isBookingSlotFree(Booking booking){
+    public void isBookingSlotFree(Booking booking){
         LocalDateTime bookingStartTime = booking.getStartTime();
         LocalDateTime bookingEndTime = booking.getEndTime();
 
@@ -82,9 +75,8 @@ public class BookingService implements IBookingService {
 
         if(bookingStartTime.toLocalTime().isBefore(startDay)
           || bookingEndTime.toLocalTime().isAfter(endDay)) {
-            return false;
+            throw new BookingTimeNotAvaibleException(bookingStartTime, "Must be within 08:00–18:00 ");
         }
-
 
         LocalDateTime previousBookingEndTime = bookingRepository.findPreviousByTime(bookingStartTime)
                 .map( previousBooking -> previousBooking.getEndTime())
@@ -95,8 +87,7 @@ public class BookingService implements IBookingService {
 
         if (bookingStartTime.isBefore(previousBookingEndTime)
             || bookingEndTime.isAfter(nextBookingStartTime)){
-            return false;
+            throw new BookingTimeNotAvaibleException(bookingStartTime, "Slot overlaps with existing booking");
         }
-        return true;
     }
 }
